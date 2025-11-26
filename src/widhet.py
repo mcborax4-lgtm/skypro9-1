@@ -29,3 +29,16 @@ def mask_account_card(account_info: str) -> str:
         account_type = ' '.join([word for word in words if not word.isdigit()])
 
     return f"{account_type} {masked_number}"
+
+
+def get_date(date_string: str) -> str:
+    """
+    Преобразует дату из формата "2024-03-11T02:26:18.671407" в "11.03.2024"
+    """
+    # Берем только часть до T (дату)
+    date_part = date_string.split("T")[0]
+
+    # Разбиваем на год, месяц, день
+    year, month, day = date_part.split("-")
+
+    return f"{day}.{month}.{year}"
