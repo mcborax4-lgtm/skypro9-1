@@ -24,7 +24,7 @@ line-length = 119
 target-version = ['py313']
 include = '\.pyi?$'
 extend-exclude = '''
-/(
+/(k
   \.eggs
   | \.git
   | \.hg
