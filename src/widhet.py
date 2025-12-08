@@ -9,7 +9,7 @@ def mask_account_card(account_info: str) -> str:
         str: Замаскированный номер
     """
     # Находим последние 4 цифры (номер)
-    digits = ''.join(filter(str.isdigit, account_info))
+    digits = "".join(filter(str.isdigit, account_info))
     last_four = digits[-4:] if len(digits) >= 4 else digits
 
     # Определяем тип
@@ -26,7 +26,7 @@ def mask_account_card(account_info: str) -> str:
             masked_number = f"******{last_four}"
         # Берем все слова кроме цифр как тип карты
         words = account_info.split()
-        account_type = ' '.join([word for word in words if not word.isdigit()])
+        account_type = " ".join([word for word in words if not word.isdigit()])
 
     return f"{account_type} {masked_number}"
 
