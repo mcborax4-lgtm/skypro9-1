@@ -15,6 +15,7 @@ def get_mask_card_number(card_number: str | int) -> str:
     # Форматируем номер
     return f"{cleaned_number[:4]} {cleaned_number[4:6]}** **** {cleaned_number[-4:]}"
 
+
 def get_mask_account(account_number: str) -> str:
     """
     маскируем счет

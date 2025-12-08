@@ -29,7 +29,7 @@ def mask_account_card(account_info: str) -> str:
     # Также проверяем вариант с латинской C
     if not is_account:
         # Заменяем латинскую c на кириллическую
-        type_with_cyrillic_c = type_lower.replace('c', 'с')
+        type_with_cyrillic_c = type_lower.replace("c", "с")
         is_account = "счет" in type_with_cyrillic_c
 
     if is_account:
@@ -41,6 +41,7 @@ def mask_account_card(account_info: str) -> str:
         else:
             masked_number = f"******{last_four}"
         return f"{account_type} {masked_number}"
+
 
 def get_date(date_string: str) -> str:
     """

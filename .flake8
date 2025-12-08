@@ -1,6 +1,14 @@
 [flake8]
 max-line-length = 119
 show-source = True
-ignore =
-    E203,  # пробел перед ':' (conflicts with black)
-    W503,  # разрыв строки перед оператором
+
+ignore = E203, W503, E501
+
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .mypy_cache
+
+max-complexity = 10

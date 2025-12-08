@@ -53,3 +53,10 @@ executed = filter_by_state(transactions, "EXECUTED")
 sorted_transactions = sort_by_date(transactions)
 ```
 
+## Тестирование
+
+Проект покрыт тестами с использованием pytest. Покрытие кода составляет более 80%.
+
+### Запуск тестов
+```bash
+poetry run pytest tests/ -v
