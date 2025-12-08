@@ -5,7 +5,6 @@ from src.widhet import mask_account_card, get_date
 class TestWidget:
     """Тесты для модуля widhet.py (с опечаткой)"""
 
-    # Тесты для mask_account_card
     @pytest.mark.parametrize("account_info, expected", [
         ("Visa Platinum 7000792289606361", "Visa Platinum 700079******6361"),
         ("Maestro 1596837868705199", "Maestro 159683******5199"),
@@ -33,7 +32,7 @@ class TestWidget:
 
     @pytest.mark.parametrize("account_info", [
         "Карта 123",  # слишком мало цифр
-        "Счет 123",  # слишком мало цифр
+        "Счет 123",
         "",  # пустая строка
         "Только текст без цифр",
     ])

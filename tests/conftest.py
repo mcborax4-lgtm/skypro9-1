@@ -10,7 +10,6 @@ def sample_card_numbers():
         "0000111122223333"
     ]
 
-
 @pytest.fixture
 def sample_account_info():
     """Фикстура с тестовыми данными карт/счетов"""
@@ -26,7 +25,6 @@ def sample_account_info():
         "СЧЕТ 89992000333344445555"   # заглавные
     ]
 
-
 @pytest.fixture
 def sample_dates():
     """Фикстура с тестовыми датами"""
@@ -36,7 +34,6 @@ def sample_dates():
         "2025-01-01T00:00:00.000000",
         "2000-02-29T12:30:45.123456"
     ]
-
 
 @pytest.fixture
 def invalid_inputs():

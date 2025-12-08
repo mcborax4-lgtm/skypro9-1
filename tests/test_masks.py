@@ -1,7 +1,5 @@
 import pytest
 from src.masks import get_mask_card_number
-
-
 class TestMasks:
     """Тесты для модуля masks.py"""
 
@@ -31,7 +29,7 @@ class TestMasks:
         "12345678901234567",
         "abcdefghijklmnop",
         "",
-        "1234 5678 9012",  # только 12 цифр с пробелами
+        "1234 5678 9012",
     ])
     def test_invalid_card_numbers(self, invalid_card):
         """Тест маскировки невалидных номеров карт"""
@@ -40,12 +38,8 @@ class TestMasks:
 
     def test_type_error(self):
         """Тест передачи числа вместо строки"""
-        # Теперь функция должна работать с числами
         result = get_mask_card_number(1234567890123456)
         assert result == "1234 56** **** 3456"
-
-
-# Добавьте в tests/test_masks.py:
 
 def test_get_mask_card_number_edge_cases():
     """Тест пограничных случаев"""
@@ -64,3 +58,29 @@ def test_get_mask_card_number_special_characters():
     """Тест со специальными символами"""
     assert get_mask_card_number("7000a7922b8960c6361") == "7000 79** **** 6361"
     assert get_mask_card_number("7_0_0_0_7_9_2_2_8_9_6_0_6_3_6_1") == "7000 79** **** 6361"
+
+    def test_get_mask_card_number_with_mixed_characters():
+        """Тест с смешанными символами"""
+        assert get_mask_card_number("7a0b0c7d9e2f2g8h9i6j0k6l3m6n1") == "7000 79** **** 6361"
+        assert get_mask_card_number("7000-7922-8960-6361") == "7000 79** **** 6361"
+        assert get_mask_card_number("7000 7922 8960 6361") == "7000 79** **** 6361"
+
+    def test_get_mask_card_number_with_special_formats():
+        """Тест со специальными форматами"""
+        assert get_mask_card_number("1234-5678-9012-3456") == "1234 56** **** 3456"
+        assert get_mask_card_number("  1234  5678  9012  3456  ") == "1234 56** **** 3456"
+        assert get_mask_card_number("1234_5678_9012_3456") == "1234 56** **** 3456"
+
+    def test_get_mask_card_number_error_messages():
+        """Тест сообщений об ошибках"""
+        with pytest.raises(ValueError, match="Номер карты должен содержать 16 цифр"):
+            get_mask_card_number("123")
+        with pytest.raises(ValueError, match="Номер карты должен содержать 16 цифр"):
+            get_mask_card_number("")
+        with pytest.raises(ValueError, match="Номер карты должен содержать 16 цифр"):
+            get_mask_card_number("12345678901234567")
+
+    def test_get_mask_card_number_int_input():
+        """Тест с числовым вводом"""
+        assert get_mask_card_number(1234567890123456) == "1234 56** **** 3456"
+        assert get_mask_card_number(7000792289606361) == "7000 79** **** 6361"
