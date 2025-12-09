@@ -15,15 +15,15 @@
    ```
 ## Использование 
 1. Модуль ```masks``` - маскировка номеров карт
-```
-from skypro9.masks import get_mask_card_number
+```python
+from src.masks import get_mask_card_number
 
 masked = get_mask_card_number("7000792289606361")
 print(masked)  # 7000 79** **** 6361
 ```
 2. Модуль ```widget``` - работа со счетами и датами
-```
-from skypro9.widget import mask_account_card, get_date
+```python
+from src.widget import mask_account_card, get_date
 
 # Маскировка карты
 print(mask_account_card("Visa Platinum 7000792289606361"))
@@ -38,8 +38,8 @@ print(get_date("2024-03-11T02:26:18.671407"))
 # Результат: 11.03.2024
 ```
 3. Модуль ```processing``` - обработка транзакций
-```
-from skypro9.processing import filter_by_state, sort_by_date
+```python
+from src.processing import filter_by_state, sort_by_date
 
 transactions = [
     {"id": 1, "state": "EXECUTED", "date": "2024-03-11T02:26:18.671407"},
@@ -58,5 +58,53 @@ sorted_transactions = sort_by_date(transactions)
 Проект покрыт тестами с использованием pytest. Покрытие кода составляет более 80%.
 
 ### Запуск тестов
-```bash
+   ``` bash
 poetry run pytest tests/ -v
+   ```
+## Модуль generators.py
+
+Новый модуль для работы с генераторами транзакций.
+
+### Функции:
+
+#### 1. `filter_by_currency(transactions, currency)`
+Фильтрует транзакции по валюте и возвращает итератор.
+
+```python
+from src.generators import filter_by_currency
+
+usd_transactions = filter_by_currency(transactions, "USD")
+for transaction in usd_transactions:
+    print(f"ID: {transaction['id']}, Amount: {transaction['operationAmount']['amount']}")
+```
+
+#### 2. `transaction_descriptions(transactions)`
+Возвращает генератор описаний транзакций.
+```python
+from src.generators import transaction_descriptions
+descriptions = transaction_descriptions(transactions)
+for description in descriptions:
+    print(description)    
+ ```
+#### 2. `card_number_generator(start, end)` 
+Генерирует номера банковских карт в заданном диапазоне.
+```python
+from src.generators import card_number_generator
+
+# Генерация первых 5 номеров карт
+card_numbers = card_number_generator(1, 5)
+for card in card_numbers:
+    print(card)
+# Вывод:
+# 0000 0000 0000 0001
+# 0000 0000 0000 0002
+# 0000 0000 0000 0003
+# 0000 0000 0000 0004
+# 0000 0000 0000 0005
+```
+#### Особенности:
+Все функции возвращают генераторы (ленивые вычисления)
+
+card_number_generator автоматически форматирует номера карт
+
+Функции работают с любой структурой транзакций, соответствующей ожидаемому формату
