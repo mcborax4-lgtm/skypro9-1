@@ -1,5 +1,6 @@
 from typing import Dict, Iterator, List, Any
 
+
 def filter_by_currency(transactions: List[Dict[str, Any]], currency: str) -> Iterator[Dict[str, Any]]:
     for transaction in transactions:
         # Проверяем наличие ключа и соответствие валюты

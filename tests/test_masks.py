@@ -59,6 +59,7 @@ def test_special_formats():
     assert get_mask_card_number("  1234  5678  9012  3456  ") == "1234 56** **** 3456"
     assert get_mask_card_number("1234_5678_9012_3456") == "1234 56** **** 3456"
 
+
 def test_get_mask_account_valid():
     """Тест маскировки валидного номера счета"""
     assert get_mask_account("73654108430135874305") == "** 4305"
