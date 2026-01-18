@@ -1,6 +1,6 @@
 import json
 import tempfile
-import pytest
+
 from src.utils import load_json_data
 
 
@@ -8,7 +8,7 @@ class TestUtils:
     def test_load_valid_json(self):
         """Тест загрузки валидного JSON файла."""
         # Создаем временный файл с JSON
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as tmp:
             json.dump([{"id": 1, "name": "test"}], tmp)
             tmp_path = tmp.name
 
@@ -17,11 +17,12 @@ class TestUtils:
             assert result == [{"id": 1, "name": "test"}]
         finally:
             import os
+
             os.unlink(tmp_path)
 
     def test_load_empty_file(self):
         """Тест загрузки пустого файла."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as tmp:
             tmp_path = tmp.name  # Создаем пустой файл
 
         try:
@@ -29,11 +30,12 @@ class TestUtils:
             assert result == []
         finally:
             import os
+
             os.unlink(tmp_path)
 
     def test_load_non_list_json(self):
         """Тест загрузки JSON который не является списком."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as tmp:
             json.dump({"id": 1}, tmp)  # Словарь, не список
             tmp_path = tmp.name
 
@@ -42,6 +44,7 @@ class TestUtils:
             assert result == []
         finally:
             import os
+
             os.unlink(tmp_path)
 
     def test_file_not_found(self):
@@ -51,7 +54,7 @@ class TestUtils:
 
     def test_invalid_json(self):
         """Тест загрузки невалидного JSON."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as tmp:
             tmp.write("{это не json}")  # Невалидный JSON
             tmp_path = tmp.name
 
@@ -60,6 +63,7 @@ class TestUtils:
             assert result == []
         finally:
             import os
+
             os.unlink(tmp_path)
 
     def test_with_real_data(self):

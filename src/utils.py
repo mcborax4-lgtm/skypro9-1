@@ -1,9 +1,10 @@
 """
 Модуль utils для работы с файлами и данными.
 """
+
 import json
-from typing import List, Dict, Any
 import os
+from typing import Any, Dict, List
 
 
 def load_json_data(file_path: str) -> List[Dict[str, Any]]:
@@ -21,7 +22,7 @@ def load_json_data(file_path: str) -> List[Dict[str, Any]]:
         return []
 
     try:
-        with open(file_path, 'r', encoding='utf-8') as file:
+        with open(file_path, "r", encoding="utf-8") as file:
             data = json.load(file)
 
         # Проверяем что данные  список

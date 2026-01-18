@@ -1,4 +1,4 @@
-from typing import Dict, Iterator, List, Any
+from typing import Any, Dict, Iterator, List
 
 
 def filter_by_currency(transactions: List[Dict[str, Any]], currency: str) -> Iterator[Dict[str, Any]]:
@@ -18,8 +18,7 @@ def card_number_generator(start: int, end: int) -> Iterator[str]:
     # Проверка диапазона
     if start < 1 or end > 9999999999999999 or start > end:
         raise ValueError(
-            f"Диапазон должен быть от 1 до 9999999999999999, start <= end. "
-            f"Получено: start={start}, end={end}"
+            f"Диапазон должен быть от 1 до 9999999999999999, start <= end. " f"Получено: start={start}, end={end}"
         )
 
     for number in range(start, end + 1):
