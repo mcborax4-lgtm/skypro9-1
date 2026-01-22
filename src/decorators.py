@@ -2,8 +2,8 @@
 Модуль с декораторами для логирования.
 """
 
-from typing import Callable, Any
 import functools
+from typing import Any, Callable
 
 
 def log(filename: str | None = None) -> Callable:
@@ -16,8 +16,8 @@ def log(filename: str | None = None) -> Callable:
             try:
                 # Выводим или записываем начало
                 if filename:
-                    with open(filename, 'a', encoding='utf-8') as f:
-                        f.write(start_message + '\n')
+                    with open(filename, "a", encoding="utf-8") as f:
+                        f.write(start_message + "\n")
                 else:
                     print(start_message)
 
@@ -33,8 +33,8 @@ def log(filename: str | None = None) -> Callable:
 
                 # Выводим или записываем ошибку
                 if filename:
-                    with open(filename, 'a', encoding='utf-8') as f:
-                        f.write(error_message + '\n')
+                    with open(filename, "a", encoding="utf-8") as f:
+                        f.write(error_message + "\n")
                 else:
                     print(error_message)
 
@@ -44,8 +44,8 @@ def log(filename: str | None = None) -> Callable:
             else:
                 # Выводим или записываем успешное завершение
                 if filename:
-                    with open(filename, 'a', encoding='utf-8') as f:
-                        f.write(success_message + '\n')
+                    with open(filename, "a", encoding="utf-8") as f:
+                        f.write(success_message + "\n")
                 else:
                     print(success_message)
 

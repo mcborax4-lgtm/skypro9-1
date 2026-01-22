@@ -1,6 +1,6 @@
 import pytest
 
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def test_valid_card_numbers():
@@ -87,7 +87,7 @@ def test_get_mask_account_with_dashes():
         "abcdefghijklmnopqrst",
         "",
         "1234 5678 9012 3456",
-    ]
+    ],
 )
 def test_get_mask_account_invalid(invalid_account):
     """Тест маскировки невалидных номеров счетов"""

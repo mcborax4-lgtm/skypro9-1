@@ -1,6 +1,8 @@
 import os
 import tempfile
+
 import pytest
+
 from src.decorators import log
 
 
@@ -51,7 +53,7 @@ class TestLogDecorator:
     def test_log_to_file_success(self):
         """Тест логирования успешной функции в файл."""
         # Создаем временный файл
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, encoding='utf-8') as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, encoding="utf-8") as tmp:
             tmp_filename = tmp.name
 
         try:
@@ -64,7 +66,7 @@ class TestLogDecorator:
             result = test_func(4, 5)
 
             # Читаем файл
-            with open(tmp_filename, 'r', encoding='utf-8') as f:
+            with open(tmp_filename, "r", encoding="utf-8") as f:
                 content = f.read()
 
             # Проверяем
@@ -80,7 +82,7 @@ class TestLogDecorator:
 
     def test_log_to_file_error(self):
         """Тест логирования функции с ошибкой в файл."""
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, encoding='utf-8') as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, encoding="utf-8") as tmp:
             tmp_filename = tmp.name
 
         try:
@@ -93,7 +95,7 @@ class TestLogDecorator:
                 test_func()
 
             # Читаем файл
-            with open(tmp_filename, 'r', encoding='utf-8') as f:
+            with open(tmp_filename, "r", encoding="utf-8") as f:
                 content = f.read()
 
             # Проверяем
