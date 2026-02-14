@@ -108,3 +108,45 @@ for card in card_numbers:
 card_number_generator автоматически форматирует номера карт
 
 Функции работают с любой структурой транзакций, соответствующей ожидаемому формату
+## Поддержка CSV и Excel форматов
+
+### Новый модуль: `file_handlers.py`
+
+Модуль предоставляет функции для чтения финансовых транзакций из разных форматов файлов.
+
+#### Функции:
+
+1. **`read_json_file(file_path)`**
+   - Чтение данных из JSON файла
+   - Возвращает список словарей с транзакциями
+   - При ошибках возвращает пустой список
+
+2. **`read_csv_file(file_path)`**  
+   - Чтение данных из CSV файла с разделителем `;`
+   - Использует библиотеку pandas для парсинга
+   - Возвращает список словарей
+
+3. **`read_excel_file(file_path)`**
+   - Чтение данных из Excel файлов (XLSX/XLS)
+   - Поддерживает форматы через библиотеку openpyxl
+   - Возвращает список словарей
+
+4. **`read_transactions_file(file_path)`** - **УНИВЕРСАЛЬНАЯ ФУНКЦИЯ**
+   - Автоматически определяет формат файла по расширению:
+     - `.json` → вызывает `read_json_file()`
+     - `.csv` → вызывает `read_csv_file()`
+     - `.xlsx` или `.xls` → вызывает `read_excel_file()`
+   - Выбрасывает `ValueError` для неподдерживаемых форматов
+
+#### Пример использования:
+```python
+from src.file_handlers import read_transactions_file
+
+# Чтение разных форматов одной функцией
+json_data = read_transactions_file("data/operations.json")
+csv_data = read_transactions_file("data/transactions.csv")
+excel_data = read_transactions_file("data/transactions_excel.xlsx")
+
+print(f"JSON: {len(json_data)} записей")
+print(f"CSV: {len(csv_data)} записей")
+print(f"Excel: {len(excel_data)} записей")
