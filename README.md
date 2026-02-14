@@ -140,9 +140,10 @@ card_number_generator автоматически форматирует номе
 
 #### Пример использования:
 ```python
+
 from src.file_handlers import read_transactions_file
 
-# Чтение разных форматов одной функцией
+### Чтение разных форматов одной функцией
 json_data = read_transactions_file("data/operations.json")
 csv_data = read_transactions_file("data/transactions.csv")
 excel_data = read_transactions_file("data/transactions_excel.xlsx")
@@ -150,3 +151,27 @@ excel_data = read_transactions_file("data/transactions_excel.xlsx")
 print(f"JSON: {len(json_data)} записей")
 print(f"CSV: {len(csv_data)} записей")
 print(f"Excel: {len(excel_data)} записей")
+```
+
+### Новые функции для работы с транзакциями
+
+### Модуль search.py
+
+Функция для поиска транзакций по описанию с использованием регулярных выражений.
+
+```python
+from src.search import filter_by_description```
+
+### Поиск всех транзакций, содержащих слово "перевод"
+transactions = [
+    {"description": "Перевод организации"},
+    {"description": "Открытие вклада"},
+    {"description": "Перевод с карты на карту"}
+]
+
+result = filter_by_description(transactions, "перевод")
+ Результат: [
+     {"description": "Перевод организации"},
+     {"description": "Перевод с карты на карту"}
+]
+```
