@@ -1,7 +1,7 @@
 from src.logger_config import setup_logger
 
 # Инициализируем логгер
-logger = setup_logger(__name__, 'masks.log')
+logger = setup_logger(__name__, "masks.log")
 
 
 def get_mask_card_number(card_number: str | int) -> str:

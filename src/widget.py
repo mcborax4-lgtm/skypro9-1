@@ -1,46 +1,35 @@
-def mask_account_card(account_info: str) -> str:
-    """
-    Маскирует номер карты или счета в зависимости от типа
-    """
-    # Разделяем на слова
-    words = account_info.split()
-    if len(words) < 2:
+from src.masks import get_mask_account, get_mask_card_number
+
+
+def mask_account_card(account_info: str | int | float) -> str:
+    # Гарантированно преобразуем в строку
+    account_info = str(account_info).strip()
+
+    if not account_info:
         return account_info
 
-    # Последнее слово - номер
-    number = words[-1]
+    # Разделяем на части
+    parts = account_info.split()
 
-    # Все остальное - тип
-    account_type = " ".join(words[:-1])
-
-    # Очищаем номер от нецифровых символов
-    digits = "".join(filter(str.isdigit, number))
-    if not digits:
+    if len(parts) < 2:
         return account_info
 
-    last_four = digits[-4:]
-
-    # Приводим тип к нижнему регистру для проверки
-    type_lower = account_type.lower()
-
-    # Проверяем является ли это счетом
-    is_account = any(keyword in type_lower for keyword in ["счет", "account"])
-
-    # Также проверяем вариант с латинской C
-    if not is_account:
-        # Заменяем латинскую c на кириллическую
-        type_with_cyrillic_c = type_lower.replace("c", "с")
-        is_account = "счет" in type_with_cyrillic_c
-
-    if is_account:
-        return f"{account_type} **{last_four}"
+    # Определяем тип (счет или карта)
+    if "счет" in account_info.lower():
+        # Для счета
+        account_number = parts[-1]
+        masked = get_mask_account(account_number)
+        return f"{' '.join(parts[:-1])} {masked}"
     else:
-        # Для карт
-        if len(digits) >= 16:
-            masked_number = f"{digits[:6]}******{last_four}"
-        else:
-            masked_number = f"******{last_four}"
-        return f"{account_type} {masked_number}"
+        # Для карты
+        card_number = parts[-1]
+        # Убираем все нецифровые символы из номера карты
+        clean_number = "".join(filter(str.isdigit, card_number))
+        if clean_number:
+            masked = get_mask_card_number(clean_number)
+            return f"{' '.join(parts[:-1])} {masked}"
+
+    return account_info
 
 
 def get_date(date_string: str) -> str:

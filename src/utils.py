@@ -1,10 +1,11 @@
 import json
 import os
 from typing import Any, Dict, List
+
 from src.logger_config import setup_logger
 
 # Инициализируем логгер
-logger = setup_logger(__name__, 'utils.log')
+logger = setup_logger(__name__, "utils.log")
 
 
 def load_json_data(file_path: str) -> List[Dict[str, Any]]:

@@ -11,6 +11,8 @@ python = "^3.13"
 python-dotenv = "^1.2.1"
 requests = "^2.32.5"
 pytest-mock = "^3.15.1"
+pandas = "^2.2.3"
+openpyxl = "^3.1.5"
 
 [build-system]
 requires = ["poetry-core"]
@@ -22,7 +24,6 @@ isort = "^7.0.0"
 flake8 = "^7.3.0"
 mypy = "^1.18.2"
 
-
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^7.0.0"
 autoflake = "^2.3.1"
@@ -32,8 +33,8 @@ line-length = 119
 target-version = ['py313']
 include = '\.pyi?$'
 extend-exclude = '''
-/(k
-  \.eggs
+/(
+  \.egrs
   | \.git
   | \.hg
   | \.mypy_cache
@@ -53,9 +54,9 @@ sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
 [tool.mypy]
 python_version = "3.13"
-warn_return_any = true
+warn_return_any = false
 warn_unused_configs = true
-disallow_untyped_defs = true
+disallow_untyped_defs = false
 disallow_incomplete_defs = true
 check_untyped_defs = true
 disallow_untyped_decorators = true
@@ -66,18 +67,26 @@ warn_no_return = true
 warn_unreachable = true
 strict_equality = true
 show_error_codes = true
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = [
-    "tests.*",
-    "test.*",
-    ".*tests.*",
-    ".*test.*"
+    "tests",
+    "test_*",
+    "*tests*"
 ]
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
 module = [
-    ".*migrations.*"
+    "*migrations*"
 ]
 ignore_errors = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-v"
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"

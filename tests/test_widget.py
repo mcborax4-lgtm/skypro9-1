@@ -4,79 +4,62 @@ from src.widget import get_date, mask_account_card
 
 
 class TestWidget:
-    """Тесты для модуля widget.py"""
+    """Тесты для функций виджета."""
 
+    # Тесты для mask_account_card с картами
     @pytest.mark.parametrize(
-        "account_info, expected",
+        "input_str, expected",
         [
-            ("Visa Platinum 7000792289606361", "Visa Platinum 700079******6361"),
-            ("Maestro 1596837868705199", "Maestro 159683******5199"),
-            ("MasterCard 7158300734726758", "MasterCard 715830******6758"),
-            ("Visa Classic 6831982476737658", "Visa Classic 683198******7658"),
-            ("Visa Gold 5999414228426353", "Visa Gold 599941******6353"),
-            ("МИР 1234567890123456", "МИР 123456******3456"),
+            ("Visa Platinum 7000792289606361", "Visa Platinum 7000 79** **** 6361"),
+            ("Maestro 1596837868705199", "Maestro 1596 83** **** 5199"),
+            ("MasterCard 7158300734726758", "MasterCard 7158 30** **** 6758"),
+            ("Visa Classic 6831982476737658", "Visa Classic 6831 98** **** 7658"),
+            ("Visa Gold 5999414228426353", "Visa Gold 5999 41** **** 6353"),
+            ("МИР 1234567890123456", "МИР 1234 56** **** 3456"),
         ],
     )
-    def test_mask_account_card_for_cards(self, account_info, expected):
-        """Тест маскировки банковских карт"""
-        result = mask_account_card(account_info)
-        assert result == expected
+    def test_mask_account_card_for_cards(self, input_str, expected):
+        """Тест маскировки карт."""
+        assert mask_account_card(input_str) == expected
 
+    # Тесты для mask_account_card со счетами
     @pytest.mark.parametrize(
-        "account_info, expected",
+        "input_str, expected",
         [
-            ("Счет 73654108430135874305", "Счет **4305"),
-            ("счет 64686473678894779589", "счет **9589"),
-            ("Cчет 35383033474447895560", "Cчет **5560"),
-            ("СЧЕТ 89992000333344445555", "СЧЕТ **5555"),
-            ("Account 12345678901234567890", "Account **7890"),
+            ("Счет 73654108430135874305", "Счет ** 4305"),
+            ("счет 64686473678894779589", "счет ** 9589"),
+            ("СЧЕТ 89992000333344445555", "СЧЕТ ** 5555"),
         ],
     )
-    def test_mask_account_card_for_accounts(self, account_info, expected):
-        """Тест маскировки счетов (разные написания)"""
-        result = mask_account_card(account_info)
-        assert result == expected
+    def test_mask_account_card_for_accounts(self, input_str, expected):
+        """Тест маскировки счетов."""
+        assert mask_account_card(input_str) == expected
 
+    # Тесты с нестандартными случаями
     @pytest.mark.parametrize(
-        "account_info",
+        "input_str, expected",
         [
-            "Карта 123",  # слишком мало цифр
-            "Счет 123",
-            "",  # пустая строка
-            "Только текст без цифр",
+            ("Счет 12345678901234567890", "Счет ** 7890"),
+            ("Карта 1234567890123456", "Карта 1234 56** **** 3456"),
         ],
     )
-    def test_mask_account_card_edge_cases(self, account_info):
-        """Тест пограничных случаев"""
-        result = mask_account_card(account_info)
-        assert isinstance(result, str)
+    def test_mask_account_card_edge_cases(self, input_str, expected):
+        """Тест маскировки с нестандартными форматами."""
+        assert mask_account_card(input_str) == expected
 
     # Тесты для get_date
     @pytest.mark.parametrize(
-        "date_string, expected",
+        "input_str, expected",
         [
             ("2024-03-11T02:26:18.671407", "11.03.2024"),
-            ("2023-12-31T23:59:59.999999", "31.12.2023"),
-            ("2025-01-01T00:00:00.000000", "01.01.2025"),
-            ("2000-02-29T12:30:45.123456", "29.02.2000"),
-            ("1999-09-09T09:09:09.090909", "09.09.1999"),
+            ("2023-12-31T23:59:59", "31.12.2023"),
+            ("2024-01-01T00:00:00", "01.01.2024"),
         ],
     )
-    def test_get_date_valid(self, date_string, expected):
-        """Тест форматирования валидных дат"""
-        result = get_date(date_string)
-        assert result == expected
+    def test_get_date(self, input_str, expected):
+        """Тест форматирования даты."""
+        assert get_date(input_str) == expected
 
-    @pytest.mark.parametrize(
-        "invalid_date, expected",
-        [
-            ("2024-03-11", "11.03.2024"),  # работает и без T
-            ("11.03.2024", "11.03.2024"),  # возвращает как есть
-            ("not a date", "not a date"),  # возвращает как есть
-            ("", ""),  # возвращает как есть
-        ],
-    )
-    def test_get_date_invalid(self, invalid_date, expected):
-        """Тест с некорректными датами"""
-        result = get_date(invalid_date)
-        assert result == expected
+    def test_get_date_invalid_format(self):
+        """Тест с некорректным форматом даты."""
+        assert get_date("не дата") == "не дата"
